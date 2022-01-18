@@ -71,6 +71,24 @@ public class MySQLUtils implements IDatabaseUtils{
 	@Override
 	public void addDeathChest(UUID playerUUID, Location location) {
 		Connection connection = connectToDatabase();
+		UUID chestUUID = UUID.randomUUID();
+		
+		try
+		{
+			PreparedStatement addDeathChestStatement = connection.prepareStatement(MySQLConstants.INSERT_NEW_CHEST);
+			addDeathChestStatement.setString(1, chestUUID.toString());
+			addDeathChestStatement.setString(2, playerUUID.toString());
+			addDeathChestStatement.setLong(3, System.currentTimeMillis());
+			addDeathChestStatement.setInt(4, location.getBlockX());
+			addDeathChestStatement.setInt(5, location.getBlockY());
+			addDeathChestStatement.setInt(6, location.getBlockZ());
+			addDeathChestStatement.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			Bukkit.getLogger().severe("Failed to insert a death chest into the database!");
+			Bukkit.getLogger().severe(e.toString());
+		}
 		// TODO: add functionality to this - waiting for clarification on Death Chest count from DevRoom
 		disconnect(connection);
 	}

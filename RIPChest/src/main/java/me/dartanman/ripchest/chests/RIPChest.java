@@ -10,13 +10,19 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class RIPChest
 {
 	
+	private UUID chestUUID;
 	private UUID playerUUID;
 	private Location chestLocation;
 	
-	public RIPChest(UUID playerUUID, Location chestLocation)
+	public RIPChest(UUID chestUUID, UUID playerUUID, Location chestLocation)
 	{
 		this.playerUUID = playerUUID;
 		this.chestLocation = chestLocation;
+	}
+	
+	public UUID getUniqueId()
+	{
+		return chestUUID;
 	}
 	
 	public UUID getPlayerUUID()
