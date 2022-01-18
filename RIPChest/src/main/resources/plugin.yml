@@ -1,0 +1,5 @@
+name: RIPChest
+author: Dartanman
+version: ${project.version}
+api-version: 1.18
+main: me.dartanman.ripchest.RIPChest
