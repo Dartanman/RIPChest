@@ -69,10 +69,8 @@ public class MySQLUtils implements IDatabaseUtils{
 	}
 	
 	@Override
-	public void addDeathChest(UUID playerUUID, Location location) {
+	public void addDeathChest(UUID chestUUID, UUID playerUUID, Location location) {
 		Connection connection = connectToDatabase();
-		UUID chestUUID = UUID.randomUUID();
-		
 		try
 		{
 			PreparedStatement addDeathChestStatement = connection.prepareStatement(MySQLConstants.INSERT_NEW_CHEST);
@@ -89,7 +87,6 @@ public class MySQLUtils implements IDatabaseUtils{
 			Bukkit.getLogger().severe("Failed to insert a death chest into the database!");
 			Bukkit.getLogger().severe(e.toString());
 		}
-		// TODO: add functionality to this - waiting for clarification on Death Chest count from DevRoom
 		disconnect(connection);
 	}
 	

@@ -6,6 +6,6 @@ import org.bukkit.Location;
 
 public interface IDatabaseUtils {
 	
-	public void addDeathChest(UUID playerUUID, Location location);
+	public void addDeathChest(UUID chestUUID, UUID playerUUID, Location location);
 
 }
