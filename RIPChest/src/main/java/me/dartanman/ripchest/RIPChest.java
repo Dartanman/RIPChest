@@ -7,7 +7,8 @@ public class RIPChest extends JavaPlugin
 	
 	public void onEnable()
 	{
-
+		getConfig().options().copyDefaults(true);
+		saveConfig();
 	}
 
 }
