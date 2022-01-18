@@ -9,7 +9,7 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
-import me.dartanman.ripchest.RIPChest;
+import me.dartanman.ripchest.RIPChestPlugin;
 
 public class MySQLUtils implements IDatabaseUtils{
 	
@@ -19,7 +19,7 @@ public class MySQLUtils implements IDatabaseUtils{
 	private static String username;
 	private static String password;
 	
-	private static void init(RIPChest plugin)
+	private static void init(RIPChestPlugin plugin)
 	{
 		host = plugin.getConfig().getString("MySQL.Host");
 		port = plugin.getConfig().getString("MySQL.Port");
