@@ -7,3 +7,5 @@ MySQL:
   Password: 'password'
 Settings:
   Death-Chest-Expire-Time-Seconds: 5
+Messages:
+  Need-Key-To-Open: '&cYou need a Death Key to open that!'

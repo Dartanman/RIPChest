@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.dartanman.ripchest.RIPChestPlugin;
@@ -35,6 +36,40 @@ public class RIPChestManager {
 	public boolean addRIPChest(RIPChest chest)
 	{
 		return chestList.add(chest);
+	}
+	
+	public boolean isBlockRIPChest(Block block)
+	{
+		if(block.getType().equals(Material.CHEST))
+		{
+			for(RIPChest chest : chestList)
+			{
+				if(block.getLocation().equals(chest.getLocation()))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public RIPChest getChestFromBlock(Block block)
+	{
+		if(isBlockRIPChest(block))
+		{
+			for(RIPChest chest : chestList)
+			{
+				if(block.getLocation().equals(chest.getLocation()))
+				{
+					return chest;
+				}
+			}
+			return null;
+		}
+		else
+		{
+			return null;
+		}
 	}
 	
 	public boolean addRIPChestWithDatabase(RIPChest chest)
