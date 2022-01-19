@@ -1,8 +1,11 @@
 package me.dartanman.ripchest.listeners;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
@@ -12,13 +15,29 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
+import me.dartanman.ripchest.RIPChestPlugin;
+import me.dartanman.ripchest.chests.RIPChest;
+
 public class DeathListener implements Listener
 {
+	
+	private RIPChestPlugin plugin;
+	
+	public DeathListener(RIPChestPlugin plugin)
+	{
+		this.plugin = plugin;
+	}
 	
 	@EventHandler
 	public void onDeath(PlayerDeathEvent event)
 	{
-		final List<ItemStack> drops = event.getDrops();
+		
+		List<ItemStack> drops = new ArrayList();
+		
+		for(ItemStack item : event.getDrops())
+		{
+			drops.add(item.clone());
+		}
 		
 		event.getDrops().clear();
 		
@@ -30,11 +49,39 @@ public class DeathListener implements Listener
 		
 		deathLocation.getBlock().setType(Material.CHEST);
 		
-		Chest chest = (Chest) deathLocation.getBlock();
+		Chest chest = (Chest) deathLocation.getBlock().getState();
+		
+		RIPChest ripChest = plugin.getChestManager().createRIPChest(playerUUID, deathLocation);
+		plugin.getChestManager().addRIPChestWithDatabase(ripChest);
+		
+		ArrayList<ItemStack> leftOverItems = new ArrayList<ItemStack>();
 		
 		for(ItemStack item : drops)
 		{
-			chest.getInventory().addItem(item);
+			HashMap<Integer, ItemStack> leftOver = chest.getInventory().addItem(item);
+			if(leftOver.keySet() != null)
+			{
+				if(leftOver.keySet().size() != 0)
+				{
+					for(Integer key : leftOver.keySet())
+					{
+						leftOverItems.add(leftOver.get(key));
+					}
+				}
+			}
+		}
+		
+		if(!leftOverItems.isEmpty()) 
+		{
+			Location nextLocation = deathLocation.clone().add(1, 0, 0);
+			nextLocation.getBlock().setType(Material.CHEST);
+			Chest nextChest = (Chest) nextLocation.getBlock().getState();
+			RIPChest otherRIPChest = plugin.getChestManager().createRIPChest(playerUUID, nextLocation);
+			plugin.getChestManager().addRIPChestWithDatabase(otherRIPChest);
+			for(ItemStack item : leftOverItems)
+			{
+				nextChest.getInventory().addItem(item);
+			}
 		}
 	}
 

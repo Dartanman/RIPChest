@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import me.dartanman.ripchest.RIPChestPlugin;
 
@@ -36,6 +37,19 @@ public class RIPChestManager {
 		return chestList.add(chest);
 	}
 	
+	public boolean addRIPChestWithDatabase(RIPChest chest)
+	{
+		new BukkitRunnable()
+		{
+			public void run()
+			{
+				plugin.getDatabase().addDeathChest(chest.getUniqueId(), chest.getPlayerUUID(), chest.getLocation());
+			}
+		}.runTaskAsynchronously(plugin);
+		
+		return chestList.add(chest);
+	}
+	
 	public boolean removeRIPChest(RIPChest chest)
 	{
 		return chestList.remove(chest);
@@ -50,7 +64,13 @@ public class RIPChestManager {
 			{
 				Location location = chest.getLocation();
 				location.getBlock().setType(Material.AIR);
-				plugin.getDatabase().deleteDeathChest(chest.getUniqueId());
+				new BukkitRunnable()
+				{
+					public void run()
+					{
+						plugin.getDatabase().deleteDeathChest(chest.getUniqueId());
+					}
+				}.runTaskAsynchronously(plugin);
 			}
 			else
 			{

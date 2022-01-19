@@ -24,7 +24,7 @@ public class RIPChestPlugin extends JavaPlugin
 		
 		chestManager = new RIPChestManager(this);
 		
-		getServer().getPluginManager().registerEvents(new DeathListener(), this);
+		getServer().getPluginManager().registerEvents(new DeathListener(this), this);
 	}
 	
 	public RIPChestManager getChestManager()
