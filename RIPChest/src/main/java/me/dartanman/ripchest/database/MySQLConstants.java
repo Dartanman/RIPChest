@@ -15,7 +15,7 @@ public class MySQLConstants
 			+ ");";
 	
 	public static final String INSERT_NEW_CHEST = "INSERT INTO RIP_CHEST (PLAYER_UUID, CREATE_TIME, BLOCK_X, BLOCK_Y, BLOCK_Z) VALUES " +
-	"(?, ?, ?, ?, ?, ?);";
+	"(?, ?, ?, ?, ?, ?, ?);";
 	
 	public static final String GET_CHESTS_FROM_DATABASE = "SELECT * FROM RIP_CHEST";
 	

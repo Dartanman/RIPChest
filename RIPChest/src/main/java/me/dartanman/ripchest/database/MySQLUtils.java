@@ -86,9 +86,10 @@ public class MySQLUtils implements IDatabaseUtils{
 			addDeathChestStatement.setString(1, chestUUID.toString());
 			addDeathChestStatement.setString(2, playerUUID.toString());
 			addDeathChestStatement.setLong(3, System.currentTimeMillis());
-			addDeathChestStatement.setInt(4, location.getBlockX());
-			addDeathChestStatement.setInt(5, location.getBlockY());
-			addDeathChestStatement.setInt(6, location.getBlockZ());
+			addDeathChestStatement.setString(4, location.getWorld().getName());
+			addDeathChestStatement.setInt(5, location.getBlockX());
+			addDeathChestStatement.setInt(6, location.getBlockY());
+			addDeathChestStatement.setInt(7, location.getBlockZ());
 			addDeathChestStatement.executeUpdate();
 			addDeathChestStatement.close();
 		}
