@@ -1,2 +1,2 @@
 # RIPChest
-Plugin I made for DevRoom application
+Plugin I made/am making for DevRoom application.
