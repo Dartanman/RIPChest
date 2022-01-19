@@ -6,4 +6,4 @@ MySQL:
   username: 'admin'
   password: 'password'
 Settings:
-  Death-Chest-Expire-Time-Seconds: 600
+  Death-Chest-Expire-Time-Seconds: 5

@@ -50,9 +50,12 @@ public class RIPChestManager {
 			{
 				Location location = chest.getLocation();
 				location.getBlock().setType(Material.AIR);
-				// Delete from DB
+				plugin.getDatabase().deleteDeathChest(chest.getUniqueId());
 			}
-			addRIPChest(chest);
+			else
+			{
+				addRIPChest(chest);	
+			}
 		}
 	}
 
