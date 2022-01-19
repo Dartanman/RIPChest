@@ -17,6 +17,7 @@ public class RIPChest
 	
 	public RIPChest(UUID chestUUID, UUID playerUUID, Location chestLocation, long createTime)
 	{
+		this.chestUUID = chestUUID;
 		this.playerUUID = playerUUID;
 		this.chestLocation = chestLocation;
 		this.createTime = createTime;
