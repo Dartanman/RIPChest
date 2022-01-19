@@ -5,3 +5,5 @@ MySQL:
   database: 'schema'
   username: 'admin'
   password: 'password'
+Settings:
+  Death-Chest-Expire-Time-Seconds: 600

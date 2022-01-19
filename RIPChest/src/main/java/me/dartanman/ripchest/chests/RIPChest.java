@@ -13,11 +13,18 @@ public class RIPChest
 	private UUID chestUUID;
 	private UUID playerUUID;
 	private Location chestLocation;
+	private long createTime;
 	
-	public RIPChest(UUID chestUUID, UUID playerUUID, Location chestLocation)
+	public RIPChest(UUID chestUUID, UUID playerUUID, Location chestLocation, long createTime)
 	{
 		this.playerUUID = playerUUID;
 		this.chestLocation = chestLocation;
+		this.createTime = createTime;
+	}
+	
+	public long getCreateTime()
+	{
+		return createTime;
 	}
 	
 	public UUID getUniqueId()
@@ -66,6 +73,34 @@ public class RIPChest
 			}
 			
 			return false;
+	}
+	
+	@Override
+	public boolean equals(Object otherObject)
+	{
+		
+		if(!(otherObject instanceof RIPChest))
+		{
+			return false;
+		}
+		
+		if(otherObject.equals(this))
+		{
+			return true;
+		}
+		else
+		{
+			RIPChest otherChest = (RIPChest) otherObject;
+			if(otherChest.getUniqueId().equals(this.getUniqueId()) && otherChest.getPlayerUUID().equals(this.getPlayerUUID()) &&
+					otherChest.getLocation().equals(this.getLocation()))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 	}
 
 }
