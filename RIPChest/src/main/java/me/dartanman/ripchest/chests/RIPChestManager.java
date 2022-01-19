@@ -44,7 +44,9 @@ public class RIPChestManager {
 		{
 			for(RIPChest chest : chestList)
 			{
-				if(block.getLocation().equals(chest.getLocation()))
+				if(block.getLocation().getBlockX() == chest.getLocation().getBlockX() &&
+						block.getLocation().getBlockY() == chest.getLocation().getBlockY() &&
+						block.getLocation().getBlockZ() == chest.getLocation().getBlockZ())
 				{
 					return true;
 				}
@@ -59,7 +61,9 @@ public class RIPChestManager {
 		{
 			for(RIPChest chest : chestList)
 			{
-				if(block.getLocation().equals(chest.getLocation()))
+				if(block.getLocation().getBlockX() == chest.getLocation().getBlockX() &&
+						block.getLocation().getBlockY() == chest.getLocation().getBlockY() &&
+						block.getLocation().getBlockZ() == chest.getLocation().getBlockZ())
 				{
 					return chest;
 				}

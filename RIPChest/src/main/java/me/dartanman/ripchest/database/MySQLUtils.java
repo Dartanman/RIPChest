@@ -125,7 +125,7 @@ public class MySQLUtils implements IDatabaseUtils{
 				int blockX = getChestsResultSet.getInt("BLOCK_X");
 				int blockY = getChestsResultSet.getInt("BLOCK_Y");
 				int blockZ = getChestsResultSet.getInt("BLOCK_Z");
-				RIPChest chest = plugin.getChestManager().createRIPChest(chestUUID, playerUUID, new Location(world, blockX, blockY, blockZ), createTime);
+				RIPChest chest = new RIPChest(chestUUID, playerUUID, new Location(world, blockX, blockY, blockZ), createTime);
 				chestList.add(chest);
 			}
 			Bukkit.getLogger().info("All death chests have successfully been gotten from the database!");
