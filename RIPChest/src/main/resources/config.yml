@@ -1,9 +1,9 @@
 # RIPChest - Dartanman's DevRoom Application
 MySQL:
-  host: 'localhost'
-  port: '3306'
-  database: 'schema'
-  username: 'admin'
-  password: 'password'
+  Host: 'localhost'
+  Port: '3306'
+  Database: 'schema'
+  Username: 'admin'
+  Password: 'password'
 Settings:
   Death-Chest-Expire-Time-Seconds: 5
