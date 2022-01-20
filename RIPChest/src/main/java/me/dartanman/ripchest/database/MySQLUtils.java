@@ -53,6 +53,7 @@ public class MySQLUtils implements IDatabaseUtils{
 		{
 			Bukkit.getLogger().severe("Failed to connect to MySQL Database!");
 			Bukkit.getLogger().severe(e.toString());
+			Bukkit.getLogger().info("IF THIS IS YOUR FIRST TIME LOADING THE PLUGIN, THE ABOVE ERROR (and any other SQL errors around this message) ARE NORMAL! JUST ENTER YOUR MYSQL INFORMATION IN THE CONFIG.YML AND RESTART YOUR SERVER!");
 			return null;
 		}
 	}
