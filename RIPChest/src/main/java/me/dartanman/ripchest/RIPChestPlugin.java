@@ -17,12 +17,6 @@ public class RIPChestPlugin extends JavaPlugin
 	
 	private RIPChestManager chestManager;
 	
-	/*
-	 * TODO:
-	 * Sign on chest
-	 * Drop items on despawn?
-	 */
-	
 	public void onEnable()
 	{
 		getConfig().options().copyDefaults(true);
