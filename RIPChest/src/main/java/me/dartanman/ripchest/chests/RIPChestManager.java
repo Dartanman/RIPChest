@@ -6,6 +6,8 @@ import java.util.UUID;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.dartanman.ripchest.RIPChestPlugin;
@@ -44,6 +46,23 @@ public class RIPChestManager {
 							public void run()
 							{
 								Location location = chest.getLocation();
+								if(plugin.getConfig().getBoolean("Settings.Drop-Items-When-Chest-Expires"))
+								{
+									Chest chestBlock = (Chest) location.getBlock().getState();
+									
+									for(ItemStack item : chestBlock.getInventory().getContents())
+									{
+										if(item == null) 
+										{
+											continue;
+										}
+										if(item.getType().equals(Material.AIR)) 
+										{
+											continue; 
+										}
+										location.getWorld().dropItemNaturally(location.clone().add(0, 0.2, 0), item);
+									}
+								}
 								location.getBlock().setType(Material.AIR);
 								removeRIPChest(chest);
 							}

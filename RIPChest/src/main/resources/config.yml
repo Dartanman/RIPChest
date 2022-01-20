@@ -6,6 +6,7 @@ MySQL:
   Username: 'admin'
   Password: 'password'
 Settings:
+  Drop-Items-When-Chest-Expires: true
   Death-Chest-Expire-Time-Seconds: 5
   Player-Message-Interval-Seconds: 10
   Seconds-Until-Broadcast: 30
