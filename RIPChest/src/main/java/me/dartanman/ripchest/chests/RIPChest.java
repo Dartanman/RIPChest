@@ -10,6 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.dartanman.ripchest.RIPChestPlugin;
+import me.dartanman.ripchest.listeners.utils.DeathKeyUtils;
 import net.md_5.bungee.api.ChatColor;
 
 public class RIPChest
@@ -109,20 +110,13 @@ public class RIPChest
 				return false;
 			}
 			
-			ItemMeta meta = hand.getItemMeta();
-			if(meta == null)
-			{
-				return false;
-			}
+			/*
+			 * ItemMeta meta = hand.getItemMeta(); if(meta == null) { return false; }
+			 * 
+			 * if(!meta.hasDisplayName()) { return false; }
+			 */
 			
-			if(!meta.hasDisplayName())
-			{
-				return false;
-			}
-			
-			String displayName = meta.getDisplayName();
-			
-			if(displayName.equals("" /*TODO: Make Death Key Item*/))
+			if(hand.isSimilar(DeathKeyUtils.createDeathKey()))
 			{
 				return true;
 			}

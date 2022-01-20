@@ -8,6 +8,7 @@ import me.dartanman.ripchest.database.MySQLUtils;
 import me.dartanman.ripchest.listeners.CloseInventoryListener;
 import me.dartanman.ripchest.listeners.DeathListener;
 import me.dartanman.ripchest.listeners.InteractListener;
+import me.dartanman.ripchest.listeners.utils.DeathKeyUtils;
 
 public class RIPChestPlugin extends JavaPlugin
 {
@@ -15,6 +16,14 @@ public class RIPChestPlugin extends JavaPlugin
 	private IDatabaseUtils databaseUtil;
 	
 	private RIPChestManager chestManager;
+	
+	/*
+	 * TODO:
+	 * Death Keys
+	 * Broadcast to all
+	 * Sign on chest
+	 * Drop items on despawn?
+	 */
 	
 	public void onEnable()
 	{
@@ -29,6 +38,8 @@ public class RIPChestPlugin extends JavaPlugin
 		getServer().getPluginManager().registerEvents(new DeathListener(this), this);
 		getServer().getPluginManager().registerEvents(new InteractListener(this), this);
 		getServer().getPluginManager().registerEvents(new CloseInventoryListener(this), this);
+		
+		DeathKeyUtils.registerCraftingRecipe();
 	}
 	
 	public RIPChestManager getChestManager()

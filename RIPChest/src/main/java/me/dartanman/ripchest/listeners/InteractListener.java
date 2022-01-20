@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 import me.dartanman.ripchest.RIPChestPlugin;
 import me.dartanman.ripchest.chests.RIPChest;
@@ -48,6 +49,14 @@ public class InteractListener implements Listener
 			event.setCancelled(true);
 			player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Messages.Need-Key-To-Open")));
 			return;
+		}
+		else
+		{
+			if(!player.getUniqueId().equals(chest.getPlayerUUID()))
+			{
+				ItemStack hand = player.getInventory().getItemInMainHand();
+				hand.setAmount(hand.getAmount() - 1);
+			}
 		}
 		
 	}
