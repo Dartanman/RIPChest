@@ -21,6 +21,34 @@ public class RIPChestManager {
 		chestList = new ArrayList<RIPChest>();
 		this.plugin = plugin;
 		loadFromDatabase();
+		startCheckingForExpiredChests();
+	}
+	
+	public void startCheckingForExpiredChests()
+	{
+		new BukkitRunnable()
+		{
+			public void run()
+			{
+				for(RIPChest chest : chestList)
+				{
+					long now = System.currentTimeMillis();
+					if(now - chest.getCreateTime() >= plugin.getConfig().getLong("Settings.Death-Chest-Expire-Time-Seconds")*1000L)
+					{
+						new BukkitRunnable()
+						{
+							public void run()
+							{
+								Location location = chest.getLocation();
+								location.getBlock().setType(Material.AIR);
+								removeRIPChest(chest);
+							}
+						}.runTask(plugin);
+						plugin.getDatabase().deleteDeathChest(chest.getUniqueId());
+					}
+				}
+			}
+		}.runTaskTimerAsynchronously(plugin, 100L, 100L);
 	}
 	
 	public RIPChest createRIPChest(UUID chestUUID, UUID playerUUID, Location location, long createTime)
