@@ -30,6 +30,10 @@ public class RIPChestManager {
 		{
 			public void run()
 			{
+				if(chestList.isEmpty())
+				{
+					return;
+				}
 				for(RIPChest chest : chestList)
 				{
 					long now = System.currentTimeMillis();

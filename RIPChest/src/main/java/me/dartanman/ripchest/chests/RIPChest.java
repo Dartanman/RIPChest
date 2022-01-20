@@ -80,27 +80,25 @@ public class RIPChest
 	public boolean equals(Object otherObject)
 	{
 		
+		if(otherObject == null)
+		{
+			return false;
+		}
+		
 		if(!(otherObject instanceof RIPChest))
 		{
 			return false;
 		}
 		
-		if(otherObject.equals(this))
+		RIPChest otherChest = (RIPChest) otherObject;
+		if(otherChest.getUniqueId().equals(this.getUniqueId()) && otherChest.getPlayerUUID().equals(this.getPlayerUUID()) &&
+				otherChest.getLocation().equals(this.getLocation()))
 		{
 			return true;
 		}
 		else
 		{
-			RIPChest otherChest = (RIPChest) otherObject;
-			if(otherChest.getUniqueId().equals(this.getUniqueId()) && otherChest.getPlayerUUID().equals(this.getPlayerUUID()) &&
-					otherChest.getLocation().equals(this.getLocation()))
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+			return false;
 		}
 	}
 
