@@ -23,23 +23,14 @@ public class InteractListener implements Listener
 		this.plugin = plugin;
 	}
 	
-	private void debug(String message)
-	{
-		Bukkit.broadcastMessage(ChatColor.AQUA + "[Debug] " + ChatColor.YELLOW + message);
-	}
-	
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event)
 	{
-		
-		debug("Interact");
 		
 		if(!event.getAction().equals(Action.RIGHT_CLICK_BLOCK))
 		{
 			return;
 		}
-		
-		debug("Right click block");
 		
 		Player player = event.getPlayer();
 		Block block = event.getClickedBlock();
@@ -50,8 +41,6 @@ public class InteractListener implements Listener
 			return;
 		}
 		
-		debug ("is rip chest");
-		
 		RIPChest chest = chestManager.getChestFromBlock(block);
 		
 		if(!chest.canOpen(player))
@@ -60,8 +49,6 @@ public class InteractListener implements Listener
 			player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Messages.Need-Key-To-Open")));
 			return;
 		}
-		
-		debug("Can open");
 		
 	}
 

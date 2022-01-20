@@ -70,6 +70,18 @@ public class RIPChestManager {
 		return chestList.add(chest);
 	}
 	
+	public boolean ripChestExists(UUID chestUUID)
+	{
+		for(RIPChest chest : chestList)
+		{
+			if(chest.getUniqueId().equals(chestUUID))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public boolean isBlockRIPChest(Block block)
 	{
 		if(block.getType().equals(Material.CHEST))
