@@ -32,7 +32,7 @@ public class RIPChest
 		this.playerUUID = playerUUID;
 		this.chestLocation = chestLocation;
 		this.createTime = createTime;
-		nextMessageTime = createTime + (plugin.getConfig().getLong("Settings.Player-Message-Interval-Seconds") * 1000L);
+		nextMessageTime = System.currentTimeMillis() + (plugin.getConfig().getLong("Settings.Player-Message-Interval-Seconds") * 1000L);
 		broadcastTime = createTime + (plugin.getConfig().getLong("Settings.Seconds-Until-Broadcast")*1000L);
 		startMessagingPlayer();
 	}
