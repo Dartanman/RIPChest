@@ -6,4 +6,3 @@ target/classes
 pom.xml
 *.lst
 *.properties
-*.jar
