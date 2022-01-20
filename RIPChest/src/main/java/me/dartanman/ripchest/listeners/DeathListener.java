@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 
 import me.dartanman.ripchest.RIPChestPlugin;
 import me.dartanman.ripchest.chests.RIPChest;
+import net.md_5.bungee.api.ChatColor;
 
 public class DeathListener implements Listener
 {
@@ -47,6 +49,17 @@ public class DeathListener implements Listener
 		Location deathLocation = player.getLocation();
 		
 		deathLocation.getBlock().setType(Material.CHEST);
+		Location signLocation = deathLocation.clone().add(0, 0, -1);
+		signLocation.getBlock().setType(Material.OAK_WALL_SIGN);
+		
+		Sign sign = (Sign) signLocation.getBlock().getState();
+		List<String> signLines = plugin.getConfig().getStringList("Settings.Sign-Lines");
+		for(int i = 0; i < 4; i++)
+		{
+			sign.setLine(i, ChatColor.translateAlternateColorCodes('&', signLines.get(i).replace("<player>", player.getName())));
+		}
+		sign.update();
+		
 		
 		Chest chest = (Chest) deathLocation.getBlock().getState();
 		
@@ -73,6 +86,14 @@ public class DeathListener implements Listener
 		if(!leftOverItems.isEmpty()) 
 		{
 			Location nextLocation = deathLocation.clone().add(1, 0, 0);
+			Location nextSignLocation = nextLocation.clone().add(0, 0, -1);
+			nextSignLocation.getBlock().setType(Material.OAK_WALL_SIGN);
+			sign = (Sign) nextSignLocation.getBlock().getState();
+			for(int i = 0; i < 4; i++)
+			{
+				sign.setLine(i, ChatColor.translateAlternateColorCodes('&', signLines.get(i).replace("<player>", player.getName())));
+			}
+			sign.update();
 			nextLocation.getBlock().setType(Material.CHEST);
 			Chest nextChest = (Chest) nextLocation.getBlock().getState();
 			RIPChest otherRIPChest = plugin.getChestManager().createRIPChest(playerUUID, nextLocation);

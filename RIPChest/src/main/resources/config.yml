@@ -9,6 +9,11 @@ Settings:
   Death-Chest-Expire-Time-Seconds: 5
   Player-Message-Interval-Seconds: 10
   Seconds-Until-Broadcast: 30
+  Sign-Lines:
+    - ''
+    - '&c&lDeath Chest Of'
+    - '&f<player>'
+    - ''
 Messages:
   Need-Key-To-Open: '&cYou need a Death Key to open that!'
   Death-Chest-Despawning-Soon: '&cYour death chest expires in <seconds> seconds! You died at &eX: <x> Y: <y> Z: <z>'
