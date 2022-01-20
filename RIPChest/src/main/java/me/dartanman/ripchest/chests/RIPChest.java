@@ -64,7 +64,6 @@ public class RIPChest
 					{
 						if(now >= nextMessageTime)
 						{
-							
 							player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Messages.Death-Chest-Despawning-Soon")
 									.replace("<seconds>", timeUntilDespawnSeconds.toString())
 									.replace("<x>", String.valueOf(chestLocation.getBlockX()))
@@ -72,6 +71,7 @@ public class RIPChest
 									.replace("<z>", String.valueOf(chestLocation.getBlockZ()))));
 						}
 					}
+					nextMessageTime += (plugin.getConfig().getLong("Settings.Player-Message-Interval-Seconds") * 1000L);
 				}
 				else
 				{
