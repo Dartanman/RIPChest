@@ -8,7 +8,9 @@ MySQL:
 Settings:
   Death-Chest-Expire-Time-Seconds: 5
   Player-Message-Interval-Seconds: 10
+  Seconds-Until-Broadcast: 30
 Messages:
   Need-Key-To-Open: '&cYou need a Death Key to open that!'
   Death-Chest-Despawning-Soon: '&cYour death chest expires in <seconds> seconds! You died at &eX: <x> Y: <y> Z: <z>'
   Death-Chest-Despawned-Or-Stolen: '&cYour death chest has despawned or been stolen!'
+  Death-Chest-Location-Broadcast: '&aThere is a death chest expring in <seconds> seconds! It is located at &eX: <x> Y: <y> Z: <z>'

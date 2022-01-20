@@ -19,7 +19,6 @@ public class RIPChestPlugin extends JavaPlugin
 	
 	/*
 	 * TODO:
-	 * Death Keys
 	 * Broadcast to all
 	 * Sign on chest
 	 * Drop items on despawn?

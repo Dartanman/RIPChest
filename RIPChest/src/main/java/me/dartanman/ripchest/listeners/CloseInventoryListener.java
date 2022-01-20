@@ -27,34 +27,24 @@ public class CloseInventoryListener implements Listener{
 		this.plugin = plugin;
 	}
 	
-	private void debug(String message)
-	{
-		Bukkit.broadcastMessage(ChatColor.AQUA + "[Debug] " + ChatColor.YELLOW + message);
-	}
-	
 	@EventHandler
 	public void onClose(InventoryCloseEvent event)
 	{
-		debug("close");
 		// I know this seems redundant, but InventoryCloseEvent.getPlayer() actually returns
 		// a HumanEntity, not a Player
 		if((event.getPlayer() instanceof Player))
 		{
 			Player player = (Player) event.getPlayer();
 			Inventory inventory = event.getInventory();
-			debug("type: " + inventory.getType().toString());
 			if(inventory.getType().equals(InventoryType.CHEST))
 			{
-				debug("chest close");
 				InventoryHolder holder = inventory.getHolder();
 				if(holder instanceof Chest)
 				{
-					debug("holder is chest");
 					Chest chest = (Chest) holder;
 					Block block = chest.getBlock();
 					if(plugin.getChestManager().isBlockRIPChest(block))
 					{
-						debug("chest is rip chest");
 						RIPChest ripChest = plugin.getChestManager().getChestFromBlock(block);
 						for(ItemStack item : inventory.getContents())
 						{
@@ -66,7 +56,6 @@ public class CloseInventoryListener implements Listener{
 							{
 								continue; 
 							}
-							debug("dropping item");
 							block.getWorld().dropItemNaturally(block.getLocation().add(0, 0.2, 0), item);
 						}
 						Location location = block.getLocation();

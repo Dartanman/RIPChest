@@ -22,6 +22,8 @@ public class RIPChest
 	private Location chestLocation;
 	private long createTime;
 	private long nextMessageTime;
+	private long broadcastTime;
+	private boolean broadcasted = false;
 	
 	public RIPChest(UUID chestUUID, UUID playerUUID, Location chestLocation, long createTime)
 	{
@@ -31,6 +33,7 @@ public class RIPChest
 		this.chestLocation = chestLocation;
 		this.createTime = createTime;
 		nextMessageTime = createTime + (plugin.getConfig().getLong("Settings.Player-Message-Interval-Seconds") * 1000L);
+		broadcastTime = createTime + (plugin.getConfig().getLong("Settings.Seconds-Until-Broadcast")*1000L);
 		startMessagingPlayer();
 	}
 	
@@ -43,21 +46,31 @@ public class RIPChest
 			{
 				if(getManager().ripChestExists(chestUUID))
 				{
+					long now = System.currentTimeMillis();
+					long timeUntilDespawn = (createTime + (plugin.getConfig().getLong("Settings.Death-Chest-Expire-Time-Seconds")*1000L)) - now;
+					Integer timeUntilDespawnSeconds = Integer.valueOf(String.valueOf(timeUntilDespawn / 1000));
+					
+					if(System.currentTimeMillis() >= broadcastTime && !broadcasted)
+					{
+						broadcasted = true;
+						Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Messages.Death-Chest-Location-Broadcast")
+								.replace("<seconds>", timeUntilDespawnSeconds.toString())
+								.replace("<x>", String.valueOf(chestLocation.getBlockX()))
+								.replace("<y>", String.valueOf(chestLocation.getBlockY()))
+								.replace("<z>", String.valueOf(chestLocation.getBlockZ()))));
+					}
 					Player player = Bukkit.getPlayer(playerUUID);
 					if(player != null)
 					{
-						long now = System.currentTimeMillis();
 						if(now >= nextMessageTime)
 						{
-							long timeUntilDespawn = (createTime + (plugin.getConfig().getLong("Settings.Death-Chest-Expire-Time-Seconds")*1000L)) - now;
-							Integer timeUntilDespawnSeconds = Integer.valueOf(String.valueOf(timeUntilDespawn / 1000));
 							
 							player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Messages.Death-Chest-Despawning-Soon")
 									.replace("<seconds>", timeUntilDespawnSeconds.toString())
 									.replace("<x>", String.valueOf(chestLocation.getBlockX()))
 									.replace("<y>", String.valueOf(chestLocation.getBlockY()))
 									.replace("<z>", String.valueOf(chestLocation.getBlockZ()))));
-						}	
+						}
 					}
 				}
 				else
