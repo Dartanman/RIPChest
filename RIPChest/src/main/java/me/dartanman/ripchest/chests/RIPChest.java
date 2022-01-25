@@ -81,7 +81,7 @@ public class RIPChest
 						// Using a for loop instead of Bukkit.broadcastMessage because Bukkit.broadcastMessage goes to console too
 						for(Player online : Bukkit.getOnlinePlayers())
 						{
-							online.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Messages.Death-Chest-Location-Broadcastn")
+							online.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Messages.Death-Chest-Location-Broadcast")
 									.replace("<seconds>", String.valueOf(secondsUntilExpire))
 									.replace("<x>", String.valueOf(chestLocation.getBlockX()))
 									.replace("<y>", String.valueOf(chestLocation.getBlockY()))
