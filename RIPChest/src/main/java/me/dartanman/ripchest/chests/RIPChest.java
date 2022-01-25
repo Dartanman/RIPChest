@@ -78,6 +78,7 @@ public class RIPChest
 					
 					if(now >= broadcastTime)
 					{
+						broadcasted = true;
 						// Using a for loop instead of Bukkit.broadcastMessage because Bukkit.broadcastMessage goes to console too
 						for(Player online : Bukkit.getOnlinePlayers())
 						{
