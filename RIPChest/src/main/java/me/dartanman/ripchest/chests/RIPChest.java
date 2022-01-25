@@ -51,19 +51,17 @@ public class RIPChest
 				
 				if(!getManager().ripChestExists(chestUUID))
 				{
+					Player player = Bukkit.getPlayer(playerUUID);
+					if(player != null)
+					{
+						player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Messages.Death-Chest-Despawned-Or-Stolen")));
+					}
 					cancel();
 					return;
 				}
 				
-				Player player = Bukkit.getPlayer(playerUUID);
-				if(player != null)
-				{
-					player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Messages.Death-Chest-Despawned-Or-Stolen")));
-				}
-				
 				if(secondsUntilExpire % secondsBetweenMessages == 0)
 				{
-					Player player = Bukkit.getPlayer(playerUUID);
 					if(player != null)
 					{
 						player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Messages.Death-Chest-Despawning-Soon")
