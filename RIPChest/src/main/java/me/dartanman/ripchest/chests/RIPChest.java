@@ -20,10 +20,10 @@ public class RIPChest
 	private UUID chestUUID;
 	private UUID playerUUID;
 	private Location chestLocation;
+	private long expireTime;
+	private int secondsBetweenMessages;
 	private long createTime;
-	private long nextMessageTime;
-	private long broadcastTime;
-	private boolean broadcasted = false;
+	private boolean broadcasted;
 	
 	public RIPChest(UUID chestUUID, UUID playerUUID, Location chestLocation, long createTime)
 	{
@@ -32,8 +32,9 @@ public class RIPChest
 		this.playerUUID = playerUUID;
 		this.chestLocation = chestLocation;
 		this.createTime = createTime;
-		nextMessageTime = System.currentTimeMillis() + (plugin.getConfig().getLong("Settings.Player-Message-Interval-Seconds") * 1000L);
-		broadcastTime = createTime + (plugin.getConfig().getLong("Settings.Seconds-Until-Broadcast")*1000L);
+		expireTime = createTime + plugin.getConfig().getLong("Settings.Death-Chest-Expire-Time-Seconds") * 1000L;
+		secondsBetweenMessages = plugin.getConfig().getInt("Settings.Player-Message-Interval-Seconds");
+		broadcasted = false;
 		startMessagingPlayer();
 	}
 	
@@ -44,46 +45,55 @@ public class RIPChest
 		{
 			public void run()
 			{
-				if(getManager().ripChestExists(chestUUID))
-				{
-					long now = System.currentTimeMillis();
-					long timeUntilDespawn = (createTime + (plugin.getConfig().getLong("Settings.Death-Chest-Expire-Time-Seconds")*1000L)) - now;
-					Integer timeUntilDespawnSeconds = Integer.valueOf(String.valueOf(timeUntilDespawn / 1000));
-					
-					if(System.currentTimeMillis() >= broadcastTime && !broadcasted)
-					{
-						broadcasted = true;
-						Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Messages.Death-Chest-Location-Broadcast")
-								.replace("<seconds>", timeUntilDespawnSeconds.toString())
-								.replace("<x>", String.valueOf(chestLocation.getBlockX()))
-								.replace("<y>", String.valueOf(chestLocation.getBlockY()))
-								.replace("<z>", String.valueOf(chestLocation.getBlockZ()))));
-					}
-					Player player = Bukkit.getPlayer(playerUUID);
-					if(player != null)
-					{
-						if(now >= nextMessageTime)
-						{
-							player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Messages.Death-Chest-Despawning-Soon")
-									.replace("<seconds>", timeUntilDespawnSeconds.toString())
-									.replace("<x>", String.valueOf(chestLocation.getBlockX()))
-									.replace("<y>", String.valueOf(chestLocation.getBlockY()))
-									.replace("<z>", String.valueOf(chestLocation.getBlockZ()))));
-						}
-					}
-					nextMessageTime += (plugin.getConfig().getLong("Settings.Player-Message-Interval-Seconds") * 1000L);
-				}
-				else
+				long now = System.currentTimeMillis();
+				long millisUntilExpire = expireTime - now;
+				int secondsUntilExpire = (int)(millisUntilExpire/1000);
+				
+				if(!getManager().ripChestExists(chestUUID))
 				{
 					Player player = Bukkit.getPlayer(playerUUID);
 					if(player != null)
 					{
 						player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Messages.Death-Chest-Despawned-Or-Stolen")));
 					}
-					cancel();
 				}
+				
+				if(secondsUntilExpire % secondsBetweenMessages == 0)
+				{
+					Player player = Bukkit.getPlayer(playerUUID);
+					if(player != null)
+					{
+						player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Messages.Death-Chest-Despawning-Soon")
+								.replace("<seconds>", String.valueOf(secondsUntilExpire))
+								.replace("<x>", String.valueOf(chestLocation.getBlockX()))
+								.replace("<y>", String.valueOf(chestLocation.getBlockY()))
+								.replace("<z>", String.valueOf(chestLocation.getBlockZ()))));
+					}
+				}
+				
+				if(!broadcasted)
+				{
+					
+					long broadcastTime = createTime + (plugin.getConfig().getLong("Settings.Seconds-Until-Broadcast") * 1000L);
+					
+					if(now >= broadcastTime)
+					{
+						// Using a for loop instead of Bukkit.broadcastMessage because Bukkit.broadcastMessage goes to console too
+						for(Player online : Bukkit.getOnlinePlayers())
+						{
+							online.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Messages.Death-Chest-Location-Broadcastn")
+									.replace("<seconds>", String.valueOf(secondsUntilExpire))
+									.replace("<x>", String.valueOf(chestLocation.getBlockX()))
+									.replace("<y>", String.valueOf(chestLocation.getBlockY()))
+									.replace("<z>", String.valueOf(chestLocation.getBlockZ()))));
+						}
+					}
+				}
+				
+				
+				
 			}
-		}.runTaskTimerAsynchronously(plugin, 0L, 100L);
+		}.runTaskTimerAsynchronously(plugin, 0L, 20L);
 	}
 	
 	public RIPChestManager getManager()
