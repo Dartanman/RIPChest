@@ -12,7 +12,6 @@ import me.dartanman.ripchest.listeners.utils.DeathKeyUtils;
 
 public class RIPChestPlugin extends JavaPlugin
 {
-	
 	private IDatabaseUtils databaseUtil;
 	
 	private RIPChestManager chestManager;
